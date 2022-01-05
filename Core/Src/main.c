@@ -19,13 +19,16 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
+#include "tim.h"
 #include "usart.h"
 #include "usb_otg.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdint.h>
+#include "WS9527.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,6 +59,19 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+extern uint16_t WS9527_Reading;
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+	WS9527_GetReadings(hadc);
+}
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+   	if (htim->Instance == TIM3) {
+	/* TIM3 is set with the frequency of 1000 Hz (period of 1 ms) */
+   	 WS9527_StartReadings();
+   	}
+   }
 
 /* USER CODE END 0 */
 
@@ -86,11 +102,14 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+  MX_TIM3_Init();
   MX_GPIO_Init();
   MX_USART3_UART_Init();
+  MX_ADC1_Init();
   MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_Base_Start_IT(&htim3);
+  WS9527_Initialize();
   /* USER CODE END 2 */
 
   /* Infinite loop */

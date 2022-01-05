@@ -1,0 +1,3 @@
+WS9527.c:7:6:WS9527_Initialize	8	static
+WS9527.c:11:6:WS9527_StartReadings	8	static
+WS9527.c:15:6:WS9527_GetReadings	16	static
