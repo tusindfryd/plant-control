@@ -8,12 +8,19 @@
     <title> </title>
     <meta name="description" content=" ">
     <link rel="stylesheet" href="styles.css">
-    <script src="main.js"></script>
-    <link
-        href=""
-        rel="icon" type="image/x-icon" />
+    <link href="" rel="icon" type="image/x-icon" />
 </head>
 
-<body><button onclick="connectDevice()">🌱</button></body>
+<body>
+    <button onclick="connectDevice()">🌱</button>
+    <div>
+        <canvas width="800" height="400" id="myChart"></canvas>
+    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"
+    integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="main.js"></script>
 
 </html>

@@ -7,23 +7,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00005f14  08000200  08000200  00010200  2**4
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000064  08006114  08006114  00016114  2**2
+  2 .rodata       00000068  08006114  08006114  00016114  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08006178  08006178  00020070  2**0
+  3 .ARM.extab    00000000  0800617c  0800617c  00020070  2**0
                   CONTENTS
-  4 .ARM          00000008  08006178  08006178  00016178  2**2
+  4 .ARM          00000008  0800617c  0800617c  0001617c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  08006180  08006180  00020070  2**0
+  5 .preinit_array 00000000  08006184  08006184  00020070  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08006180  08006180  00016180  2**2
+  6 .init_array   00000004  08006184  08006184  00016184  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  08006184  08006184  00016184  2**2
+  7 .fini_array   00000004  08006188  08006188  00016188  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000070  20000000  08006188  00020000  2**2
+  8 .data         00000070  20000000  0800618c  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          000005a8  20000070  080061f8  00020070  2**2
+  9 .bss          000005a8  20000070  080061fc  00020070  2**2
                   ALLOC
- 10 ._user_heap_stack 00000600  20000618  080061f8  00020618  2**0
+ 10 ._user_heap_stack 00000600  20000618  080061fc  00020618  2**0
                   ALLOC
  11 .ARM.attributes 0000002e  00000000  00000000  00020070  2**0
                   CONTENTS, READONLY
@@ -1344,27 +1344,27 @@ __STATIC_FORCEINLINE void __disable_irq(void)
 
 void UART_TransmitData(uint16_t reading) {
  8000b98:	b580      	push	{r7, lr}
- 8000b9a:	b088      	sub	sp, #32
+ 8000b9a:	b08a      	sub	sp, #40	; 0x28
  8000b9c:	af00      	add	r7, sp, #0
  8000b9e:	4603      	mov	r3, r0
  8000ba0:	80fb      	strh	r3, [r7, #6]
-	char json_data[23];
-    sprintf(json_data, "{ \"moisture\" : %03d }\r\n", reading);
+	char json_data[25];
+    sprintf(json_data, "{ \"moisture\" : \"%03d\" }\r\n", reading);
  8000ba2:	88fa      	ldrh	r2, [r7, #6]
- 8000ba4:	f107 0308 	add.w	r3, r7, #8
+ 8000ba4:	f107 030c 	add.w	r3, r7, #12
  8000ba8:	4907      	ldr	r1, [pc, #28]	; (8000bc8 <UART_TransmitData+0x30>)
  8000baa:	4618      	mov	r0, r3
  8000bac:	f004 fe78 	bl	80058a0 <siprintf>
 
 	HAL_UART_Transmit(&huart3, (uint8_t*)json_data, sizeof(json_data) - 1, 100);
- 8000bb0:	f107 0108 	add.w	r1, r7, #8
+ 8000bb0:	f107 010c 	add.w	r1, r7, #12
  8000bb4:	2364      	movs	r3, #100	; 0x64
- 8000bb6:	2216      	movs	r2, #22
+ 8000bb6:	2218      	movs	r2, #24
  8000bb8:	4804      	ldr	r0, [pc, #16]	; (8000bcc <UART_TransmitData+0x34>)
  8000bba:	f003 faff 	bl	80041bc <HAL_UART_Transmit>
 }
  8000bbe:	bf00      	nop
- 8000bc0:	3720      	adds	r7, #32
+ 8000bc0:	3728      	adds	r7, #40	; 0x28
  8000bc2:	46bd      	mov	sp, r7
  8000bc4:	bd80      	pop	{r7, pc}
  8000bc6:	bf00      	nop
@@ -2534,7 +2534,7 @@ LoopFillZerobss:
   ldr r1, =_edata
  8001158:	20000070 	.word	0x20000070
   ldr r2, =_sidata
- 800115c:	08006188 	.word	0x08006188
+ 800115c:	0800618c 	.word	0x0800618c
   ldr r2, =_sbss
  8001160:	20000070 	.word	0x20000070
   ldr r4, =_ebss
@@ -7387,7 +7387,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
  8002cfe:	bf00      	nop
  8002d00:	40023c00 	.word	0x40023c00
  8002d04:	40023800 	.word	0x40023800
- 8002d08:	0800612c 	.word	0x0800612c
+ 8002d08:	08006130 	.word	0x08006130
  8002d0c:	20000000 	.word	0x20000000
  8002d10:	20000004 	.word	0x20000004
 
@@ -7656,7 +7656,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  8002f0c:	4618      	mov	r0, r3
  8002f0e:	bd80      	pop	{r7, pc}
  8002f10:	40023800 	.word	0x40023800
- 8002f14:	0800613c 	.word	0x0800613c
+ 8002f14:	08006140 	.word	0x08006140
 
 08002f18 <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -7682,7 +7682,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  8002f34:	4618      	mov	r0, r3
  8002f36:	bd80      	pop	{r7, pc}
  8002f38:	40023800 	.word	0x40023800
- 8002f3c:	0800613c 	.word	0x0800613c
+ 8002f3c:	08006140 	.word	0x08006140
 
 08002f40 <HAL_RCCEx_PeriphCLKConfig>:
   *         the backup registers) are set to their reset values.
@@ -14670,10 +14670,10 @@ static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
  800587a:	4798      	blx	r3
  800587c:	3601      	adds	r6, #1
  800587e:	e7f2      	b.n	8005866 <__libc_init_array+0x1e>
- 8005880:	08006180 	.word	0x08006180
- 8005884:	08006180 	.word	0x08006180
- 8005888:	08006180 	.word	0x08006180
- 800588c:	08006184 	.word	0x08006184
+ 8005880:	08006184 	.word	0x08006184
+ 8005884:	08006184 	.word	0x08006184
+ 8005888:	08006184 	.word	0x08006184
+ 800588c:	08006188 	.word	0x08006188
 
 08005890 <memset>:
  8005890:	4402      	add	r2, r0
@@ -14991,11 +14991,11 @@ static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
  8005b7c:	f000 f87a 	bl	8005c74 <_printf_i>
  8005b80:	e7eb      	b.n	8005b5a <_svfiprintf_r+0x1c2>
  8005b82:	bf00      	nop
- 8005b84:	08006144 	.word	0x08006144
- 8005b88:	0800614e 	.word	0x0800614e
+ 8005b84:	08006148 	.word	0x08006148
+ 8005b88:	08006152 	.word	0x08006152
  8005b8c:	00000000 	.word	0x00000000
  8005b90:	080058e1 	.word	0x080058e1
- 8005b94:	0800614a 	.word	0x0800614a
+ 8005b94:	0800614e 	.word	0x0800614e
 
 08005b98 <_printf_common>:
  8005b98:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
@@ -15331,8 +15331,8 @@ static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
  8005eb0:	f104 0619 	add.w	r6, r4, #25
  8005eb4:	e7f5      	b.n	8005ea2 <_printf_i+0x22e>
  8005eb6:	bf00      	nop
- 8005eb8:	08006155 	.word	0x08006155
- 8005ebc:	08006166 	.word	0x08006166
+ 8005eb8:	08006159 	.word	0x08006159
+ 8005ebc:	0800616a 	.word	0x0800616a
 
 08005ec0 <memcpy>:
  8005ec0:	440a      	add	r2, r1
