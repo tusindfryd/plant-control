@@ -1348,8 +1348,8 @@ void UART_TransmitData(uint16_t reading) {
  8000b9c:	af00      	add	r7, sp, #0
  8000b9e:	4603      	mov	r3, r0
  8000ba0:	80fb      	strh	r3, [r7, #6]
-	char json_data[21];
-    sprintf(json_data, "{ \"moisture\" : %03d }", reading);
+	char json_data[23];
+    sprintf(json_data, "{ \"moisture\" : %03d }\r\n", reading);
  8000ba2:	88fa      	ldrh	r2, [r7, #6]
  8000ba4:	f107 0308 	add.w	r3, r7, #8
  8000ba8:	4907      	ldr	r1, [pc, #28]	; (8000bc8 <UART_TransmitData+0x30>)
@@ -1359,7 +1359,7 @@ void UART_TransmitData(uint16_t reading) {
 	HAL_UART_Transmit(&huart3, (uint8_t*)json_data, sizeof(json_data) - 1, 100);
  8000bb0:	f107 0108 	add.w	r1, r7, #8
  8000bb4:	2364      	movs	r3, #100	; 0x64
- 8000bb6:	2214      	movs	r2, #20
+ 8000bb6:	2216      	movs	r2, #22
  8000bb8:	4804      	ldr	r0, [pc, #16]	; (8000bcc <UART_TransmitData+0x34>)
  8000bba:	f003 faff 	bl	80041bc <HAL_UART_Transmit>
 }
