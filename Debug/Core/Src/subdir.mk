@@ -9,6 +9,7 @@ C_SRCS += \
 ../Core/Src/adc.c \
 ../Core/Src/gpio.c \
 ../Core/Src/main.c \
+../Core/Src/messages.c \
 ../Core/Src/stm32f7xx_hal_msp.c \
 ../Core/Src/stm32f7xx_it.c \
 ../Core/Src/syscalls.c \
@@ -23,6 +24,7 @@ OBJS += \
 ./Core/Src/adc.o \
 ./Core/Src/gpio.o \
 ./Core/Src/main.o \
+./Core/Src/messages.o \
 ./Core/Src/stm32f7xx_hal_msp.o \
 ./Core/Src/stm32f7xx_it.o \
 ./Core/Src/syscalls.o \
@@ -37,6 +39,7 @@ C_DEPS += \
 ./Core/Src/adc.d \
 ./Core/Src/gpio.d \
 ./Core/Src/main.d \
+./Core/Src/messages.d \
 ./Core/Src/stm32f7xx_hal_msp.d \
 ./Core/Src/stm32f7xx_it.d \
 ./Core/Src/syscalls.d \
