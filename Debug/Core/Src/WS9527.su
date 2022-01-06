@@ -1,3 +1,4 @@
-WS9527.c:8:6:WS9527_Initialize	8	static
-WS9527.c:12:6:WS9527_StartReadings	8	static
-WS9527.c:16:6:WS9527_GetReadings	24	static
+WS9527.c:8:7:lerp	24	static
+WS9527.c:12:6:WS9527_Initialize	8	static
+WS9527.c:16:6:WS9527_StartReadings	8	static
+WS9527.c:20:6:WS9527_GetReadings	24	static
