@@ -6,6 +6,6 @@
 - [ ] irrigating the soil (increasing the soil moisture to a set value)
 - [x] reading current values of data with serial port
 - [ ] reading current values of data with HTTP requests
-- [ ] screen
+- [x] screen
 - [ ] rotary encoder
 - [ ] checksum

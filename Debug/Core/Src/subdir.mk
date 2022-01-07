@@ -7,9 +7,14 @@
 C_SRCS += \
 ../Core/Src/WS9527.c \
 ../Core/Src/adc.c \
+../Core/Src/display.c \
 ../Core/Src/gpio.c \
+../Core/Src/i2c.c \
 ../Core/Src/main.c \
 ../Core/Src/messages.c \
+../Core/Src/ssd1306.c \
+../Core/Src/ssd1306_fonts.c \
+../Core/Src/ssd1306_tests.c \
 ../Core/Src/stm32f7xx_hal_msp.c \
 ../Core/Src/stm32f7xx_it.c \
 ../Core/Src/syscalls.c \
@@ -22,9 +27,14 @@ C_SRCS += \
 OBJS += \
 ./Core/Src/WS9527.o \
 ./Core/Src/adc.o \
+./Core/Src/display.o \
 ./Core/Src/gpio.o \
+./Core/Src/i2c.o \
 ./Core/Src/main.o \
 ./Core/Src/messages.o \
+./Core/Src/ssd1306.o \
+./Core/Src/ssd1306_fonts.o \
+./Core/Src/ssd1306_tests.o \
 ./Core/Src/stm32f7xx_hal_msp.o \
 ./Core/Src/stm32f7xx_it.o \
 ./Core/Src/syscalls.o \
@@ -37,9 +47,14 @@ OBJS += \
 C_DEPS += \
 ./Core/Src/WS9527.d \
 ./Core/Src/adc.d \
+./Core/Src/display.d \
 ./Core/Src/gpio.d \
+./Core/Src/i2c.d \
 ./Core/Src/main.d \
 ./Core/Src/messages.d \
+./Core/Src/ssd1306.d \
+./Core/Src/ssd1306_fonts.d \
+./Core/Src/ssd1306_tests.d \
 ./Core/Src/stm32f7xx_hal_msp.d \
 ./Core/Src/stm32f7xx_it.d \
 ./Core/Src/syscalls.d \
