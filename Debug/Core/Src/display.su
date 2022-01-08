@@ -1,2 +1,2 @@
-display.c:68:6:splash	8	static
-display.c:77:6:display_measurements	32	static
+display.c:87:6:splash	8	static
+display.c:96:6:display_measurements	32	static

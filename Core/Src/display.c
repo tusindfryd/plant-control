@@ -85,6 +85,7 @@ const unsigned char garfield1_128x64[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, };
 
 void splash() {
+	ssd1306_Init();
 	ssd1306_Fill(White);
 //	    ssd1306_DrawBitmap(0, 0, garfield1_128x64, 128, 64, White);
 	ssd1306_SetCursor(30, 30);
