@@ -35,7 +35,9 @@ Core/Src/encoder.o: ../Core/Src/encoder.c ../Core/Inc/encoder.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pcd.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_ll_usb.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pcd_ex.h \
- ../Core/Inc/gpio.h
+ ../Core/Inc/gpio.h ../Core/Inc/display.h ../Core/Inc/i2c.h \
+ ../Core/Inc/ssd1306.h ../Core/Inc/ssd1306_conf.h \
+ ../Core/Inc/ssd1306_fonts.h ../Core/Inc/WS9527.h ../Core/Inc/adc.h
 
 ../Core/Inc/encoder.h:
 
@@ -114,3 +116,17 @@ Core/Src/encoder.o: ../Core/Src/encoder.c ../Core/Inc/encoder.h \
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pcd_ex.h:
 
 ../Core/Inc/gpio.h:
+
+../Core/Inc/display.h:
+
+../Core/Inc/i2c.h:
+
+../Core/Inc/ssd1306.h:
+
+../Core/Inc/ssd1306_conf.h:
+
+../Core/Inc/ssd1306_fonts.h:
+
+../Core/Inc/WS9527.h:
+
+../Core/Inc/adc.h:

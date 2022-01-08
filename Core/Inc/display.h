@@ -2,9 +2,13 @@
 #define INC_DISPLAY_H_
 #endif
 
+#include <stdio.h>
+#include <stdbool.h>
 #include "i2c.h"
 #include "ssd1306.h"
-#include <stdio.h>
+#include "WS9527.h"
 
-void splash();
-void display_measurements(uint16_t moisture);
+void Splash();
+void DisplayMeasurements();
+void OpenMenu();
+void CloseMenu();

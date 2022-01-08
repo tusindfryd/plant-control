@@ -66,10 +66,11 @@ void SystemClock_Config(void);
 extern uint16_t WS9527_Reading;
 extern uint16_t positions;
 extern uint8_t button;
+extern bool menu_open;
+extern const unsigned char bg[];
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	WS9527_GetReadings(hadc);
-	QE_CheckPosition();
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
@@ -80,13 +81,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	else if (htim->Instance == TIM4) {
 			/* TIM4 is set with the frequency of 1 Hz (period of 1 s) */
 			UART_TransmitData(WS9527_Reading);
-			display_measurements(WS9527_Reading);
+			if (!menu_open) {
+				DisplayMeasurements();
+			}
+			QE_CheckPosition(); // todo: move this to a timer with a smaller period. or live with the lag
 	}
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == GPIO_PIN_13) {
-		switchHandler();
+		SwitchHandler();
 	}
 }
 /* USER CODE END 0 */
@@ -127,12 +131,11 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-	splash();
+	Splash();
 	HAL_TIM_Base_Start_IT(&htim3);
 	HAL_TIM_Base_Start_IT(&htim4);
 	WS9527_Initialize();
 	QE_Initialize();
-//	encoder_Initialize();
 
   /* USER CODE END 2 */
 

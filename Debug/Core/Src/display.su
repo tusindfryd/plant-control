@@ -1,2 +1,4 @@
-display.c:87:6:splash	8	static
-display.c:97:6:display_measurements	32	static
+display.c:156:6:Splash	32	static
+display.c:165:6:DisplayMeasurements	80	static
+display.c:183:6:OpenMenu	8	static
+display.c:195:6:CloseMenu	32	static

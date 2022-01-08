@@ -6,7 +6,8 @@
 #include <stdint.h>
 #include "tim.h"
 #include "gpio.h"
+#include "display.h"
 
 void QE_Initialize();
 void QE_CheckPosition();
-void switchHandler();
+void SwitchHandler();
