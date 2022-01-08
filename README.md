@@ -7,5 +7,5 @@
 - [x] reading current values of data with serial port
 - [ ] reading current values of data with HTTP requests
 - [x] screen
-- [ ] rotary encoder
+- [x] rotary encoder
 - [ ] checksum
