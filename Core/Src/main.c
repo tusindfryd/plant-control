@@ -33,6 +33,7 @@
 #include "WS9527.h"
 #include "messages.h"
 #include "display.h"
+#include "encoder.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -63,9 +64,12 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 extern uint16_t WS9527_Reading;
+extern uint16_t positions;
+extern uint8_t button;
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	WS9527_GetReadings(hadc);
+	QE_CheckPosition();
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
@@ -80,6 +84,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	}
 }
 
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	if (GPIO_Pin == GPIO_PIN_13) {
+		switchHandler();
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -116,11 +125,15 @@ int main(void)
   MX_ADC1_Init();
   MX_USB_OTG_FS_PCD_Init();
   MX_I2C1_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 	splash();
 	HAL_TIM_Base_Start_IT(&htim3);
 	HAL_TIM_Base_Start_IT(&htim4);
 	WS9527_Initialize();
+	QE_Initialize();
+//	encoder_Initialize();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

@@ -8,6 +8,7 @@ C_SRCS += \
 ../Core/Src/WS9527.c \
 ../Core/Src/adc.c \
 ../Core/Src/display.c \
+../Core/Src/encoder.c \
 ../Core/Src/gpio.c \
 ../Core/Src/i2c.c \
 ../Core/Src/main.c \
@@ -28,6 +29,7 @@ OBJS += \
 ./Core/Src/WS9527.o \
 ./Core/Src/adc.o \
 ./Core/Src/display.o \
+./Core/Src/encoder.o \
 ./Core/Src/gpio.o \
 ./Core/Src/i2c.o \
 ./Core/Src/main.o \
@@ -48,6 +50,7 @@ C_DEPS += \
 ./Core/Src/WS9527.d \
 ./Core/Src/adc.d \
 ./Core/Src/display.d \
+./Core/Src/encoder.d \
 ./Core/Src/gpio.d \
 ./Core/Src/i2c.d \
 ./Core/Src/main.d \
