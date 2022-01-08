@@ -1,3 +1,0 @@
-encoder.c:12:6:QE_Initialize	8	static
-encoder.c:16:6:QE_CheckPosition	8	static
-encoder.c:24:6:SwitchHandler	8	static
