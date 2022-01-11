@@ -185,17 +185,15 @@ void Splash() {
 }
 
 void DisplayMeasurements() {
-	ssd1306_SetCursor(3, 27);
+	ssd1306_SetCursor(0, 27);
+	char moisture_data[21];
 	if (WS9527_Reading < 10) {
-		char moisture_data[20];
-		sprintf(moisture_data, "Soil moisture: %01d%%", WS9527_Reading);
+		sprintf(moisture_data, "Soil moisture: %01d%%  ", WS9527_Reading);
 		ssd1306_WriteString(moisture_data, Font_7x10, White);
 	} else if (WS9527_Reading < 100) {
-		char moisture_data[21];
-		sprintf(moisture_data, "Soil moisture: %02d%%", WS9527_Reading);
+		sprintf(moisture_data, "Soil moisture: %02d%% ", WS9527_Reading);
 		ssd1306_WriteString(moisture_data, Font_7x10, White);
 	} else {
-		char moisture_data[22];
 		sprintf(moisture_data, "Soil moisture: %03d%%", WS9527_Reading);
 		ssd1306_WriteString(moisture_data, Font_7x10, White);
 	}

@@ -84,7 +84,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 			if (!menu_open) {
 				DisplayMeasurements();
 			}
-			QE_CheckPosition(); // todo: move this to a timer with a smaller period. or live with the lag
+			QE_CheckPosition();
 	}
 }
 
@@ -124,12 +124,12 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_TIM3_Init();
   MX_TIM4_Init();
+  MX_TIM1_Init();
   MX_GPIO_Init();
   MX_USART3_UART_Init();
   MX_ADC1_Init();
   MX_USB_OTG_FS_PCD_Init();
   MX_I2C1_Init();
-  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 	Splash();
 	HAL_TIM_Base_Start_IT(&htim3);
