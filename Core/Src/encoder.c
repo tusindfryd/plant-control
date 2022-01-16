@@ -26,11 +26,13 @@ void SwitchHandler() {
 		if (!menu_open) {
 			OpenMenu();
 		} else if (menu_open) {
-			if (positions % 3 == 0) {
+			if (positions % 4 == 0) {
 //				SetSoilMoistureScreen();
-			} else if (positions % 3 == 1) {
+			} else if (positions % 4 == 1) {
 //				RunPump();
-			} else if (positions % 3 == 2) {
+			} else if (positions % 4 == 2) {
+				Lamp_On_Off();
+			} else if (positions % 4 == 3) {
 				CloseMenu();
 			}
 		}

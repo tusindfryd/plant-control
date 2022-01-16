@@ -205,13 +205,16 @@ void OpenMenu() {
 	ssd1306_Fill(Black);
 	ssd1306_SetCursor(0, 0);
 	ssd1306_WriteString("Set soil moisture value", Font_7x10,
-			(positions % 3 == 0) ? Black : White);
+			(positions % 4 == 0) ? Black : White);
 	ssd1306_SetCursor(0, 11);
 	ssd1306_WriteString("Run the pump", Font_7x10,
-			(positions % 3 == 1) ? Black : White);
+			(positions % 4 == 1) ? Black : White);
+	ssd1306_SetCursor(0, 22);
+		ssd1306_WriteString("Turn lamp on/off", Font_7x10,
+				(positions % 4 == 2) ? Black : White);
 	ssd1306_SetCursor(0, 64 - 10);
 	ssd1306_WriteString("< Back", Font_7x10,
-			(positions % 3 == 2) ? Black : White);
+			(positions % 4 == 3) ? Black : White);
 	ssd1306_UpdateScreen();
 }
 

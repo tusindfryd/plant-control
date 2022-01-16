@@ -34,6 +34,7 @@
 #include "messages.h"
 #include "display.h"
 #include "encoder.h"
+#include "lamp.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -136,8 +137,8 @@ int main(void)
 	HAL_TIM_Base_Start_IT(&htim4);
 	WS9527_Initialize();
 	QE_Initialize();
-
-  /* USER CODE END 2 */
+	Lamp_Initialize();
+	/* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
