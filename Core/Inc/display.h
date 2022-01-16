@@ -7,8 +7,10 @@
 #include "i2c.h"
 #include "ssd1306.h"
 #include "WS9527.h"
+#include "lamp.h"
 
 void Splash();
 void DisplayMeasurements();
 void OpenMenu();
 void CloseMenu();
+void BackgroundRectangle();

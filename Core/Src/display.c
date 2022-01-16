@@ -172,20 +172,19 @@ const unsigned char garfield1_128x64[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, };
 
 extern uint16_t WS9527_Reading;
+extern uint16_t BH1750_Reading;
 bool menu_open = false;
 extern volatile uint16_t positions;
 
 void Splash() {
 	ssd1306_Init();
 	ssd1306_DrawBitmap(0, 0, bg, 128, 64, White);
-	for (uint8_t i = 0; i < 11; i++) {
-		ssd1306_DrawRectangle(0 + i, 20 + i, SSD1306_WIDTH - i, 43 - i, Black);
-	}
+	BackgroundRectangle();
 	ssd1306_UpdateScreen();
 }
 
 void DisplayMeasurements() {
-	ssd1306_SetCursor(0, 27);
+	ssd1306_SetCursor(0, 20);
 	char moisture_data[21];
 	if (WS9527_Reading < 10) {
 		sprintf(moisture_data, "Soil moisture: %01d%%  ", WS9527_Reading);
@@ -196,6 +195,18 @@ void DisplayMeasurements() {
 	} else {
 		sprintf(moisture_data, "Soil moisture: %03d%%", WS9527_Reading);
 		ssd1306_WriteString(moisture_data, Font_7x10, White);
+	}
+	ssd1306_SetCursor(0, 31);
+	char light_data[21];
+	if (WS9527_Reading < 10) {
+		sprintf(light_data, "Brightness: %01d lx  ", BH1750_Reading);
+		ssd1306_WriteString(light_data, Font_7x10, White);
+	} else if (WS9527_Reading < 100) {
+		sprintf(light_data, "Brightness: %02d lx ", BH1750_Reading);
+		ssd1306_WriteString(light_data, Font_7x10, White);
+	} else {
+		sprintf(light_data, "Brightness: %03d lx", BH1750_Reading);
+		ssd1306_WriteString(light_data, Font_7x10, White);
 	}
 	ssd1306_UpdateScreen();
 }
@@ -210,8 +221,8 @@ void OpenMenu() {
 	ssd1306_WriteString("Run the pump", Font_7x10,
 			(positions % 4 == 1) ? Black : White);
 	ssd1306_SetCursor(0, 22);
-		ssd1306_WriteString("Turn lamp on/off", Font_7x10,
-				(positions % 4 == 2) ? Black : White);
+	ssd1306_WriteString("Turn lamp on/off", Font_7x10,
+			(positions % 4 == 2) ? Black : White);
 	ssd1306_SetCursor(0, 64 - 10);
 	ssd1306_WriteString("< Back", Font_7x10,
 			(positions % 4 == 3) ? Black : White);
@@ -222,8 +233,12 @@ void CloseMenu() {
 	menu_open = false;
 	ssd1306_Fill(Black);
 	ssd1306_DrawBitmap(0, 0, bg, 128, 64, White);
-	for (uint8_t i = 0; i < 11; i++) {
-		ssd1306_DrawRectangle(0 + i, 20 + i, SSD1306_WIDTH - i, 43 - i, Black);
-	}
+	BackgroundRectangle();
 	DisplayMeasurements();
+}
+
+void BackgroundRectangle() {
+	for (uint8_t i = 0; i < 13; i++) {
+		ssd1306_DrawRectangle(0 + i, 15 + i, SSD1306_WIDTH - i, 42 - i, Black);
+	}
 }

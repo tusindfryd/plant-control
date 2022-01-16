@@ -2,6 +2,7 @@
 
 let data = {
     moisture: [],
+    brightness: [],
     times: []
 };
 
@@ -30,7 +31,7 @@ let connect = async () => {
     const port = await navigator.serial.requestPort();
     await port.open({
         baudRate: 9600,
-        bufferSize: 20
+        bufferSize: 50
     });
     let decoder = new TextDecoderStream();
     inputDone = port.readable.pipeTo(decoder.writable);
@@ -48,9 +49,13 @@ let connectDevice = async () => {
         if (value) {
             try {
                 let reading = JSON.parse(value);
+                console.log(reading);
                 // data.moisture.push(parseInt(reading.moisture));
                 // data.times.push(((new Date()).toLocaleString()));
-                addData(myChart, (new Date()).toLocaleString(), parseInt(reading.moisture));
+                let date = (new Date()).toLocaleString();
+                addData(moistureChart, date, parseInt(reading.moisture));
+                addData(brightnessChart, date, parseInt(reading.brightness));
+                // addData(myChart, date, parseInt(reading.brightness));
 
             } catch (error) {
                 console.log(error);
@@ -64,6 +69,12 @@ let connectDevice = async () => {
     }
 }
 
+let saveChartData = async () => {
+    console.log(moistureChart.data, brightnessChart.data)
+    // todo
+
+}
+
 let addData = (chart, label, data) => {
     chart.data.labels.push(label);
     chart.data.datasets.forEach((dataset) => {
@@ -72,7 +83,7 @@ let addData = (chart, label, data) => {
     chart.update();
 }
 
-const chartData = {
+const moistureChartData = {
     labels: data.times,
     datasets: [{
         label: 'Soil moisture',
@@ -82,25 +93,106 @@ const chartData = {
     }]
 }
 
-const config = {
+const brightnessChartData = {
+    labels: data.times,
+    datasets: [{
+        label: 'Brightness',
+        backgroundColor: 'rgb(204, 181, 24)',
+        borderColor: 'rgb(204, 181, 24)',
+        data: data.brightness,
+    }]
+}
+
+const moistureChartConfig = {
     type: 'line',
-    data: chartData,
+    data: moistureChartData,
     options: {
+        elements: {
+            point: {
+                radius: 2
+            }
+        },
+        responsive: false,
         animation: {
             duration: 0
         },
         scales: {
-            xAxis: {
-                // type: 'time',
+            x: {
+                ticks: {
+                    display: false
+                },
+                time: {
+                    unit: 'second'
+                }
             },
-            yAxis: {
-                max: 100
+            y: {
+                min: 0,
+                max: 100,
+                ticks: {
+                    callback: function (value, index, ticks) {
+                        return `${value}%`;
+                    }
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'left'
             }
         }
     }
 };
 
-const myChart = new Chart(
-    document.getElementById('myChart'),
-    config
+const brightnessChartConfig = {
+    type: 'line',
+    data: brightnessChartData,
+    options: {
+        elements: {
+            point: {
+                radius: 2
+            }
+        },
+        layout: {
+            padding: {
+                left: 19
+            }
+        },
+        responsive: false,
+        animation: {
+            duration: 0
+        },
+        scales: {
+            x: {
+                ticks: {
+                    display: false
+                },
+                time: {
+                    unit: 'second'
+                }
+            },
+            y: {
+                ticks: {
+                    callback: function (value, index, ticks) {
+                        return `${value} lx`;
+                    }
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'left'
+            }
+        }
+    }
+};
+
+const moistureChart = new Chart(
+    document.getElementById('moistureChart'),
+    moistureChartConfig,
+
+);
+
+const brightnessChart = new Chart(
+    document.getElementById('brightnessChart'),
+    brightnessChartConfig
 );
