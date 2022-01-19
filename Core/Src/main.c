@@ -71,6 +71,7 @@ extern uint8_t button;
 extern bool menu_open;
 extern const unsigned char bg[];
 extern uint16_t BH1750_Reading;
+extern double output;
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	WS9527_GetReadings(hadc);
@@ -83,6 +84,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	} else if (htim->Instance == TIM2) {
 		/* TIM2 is set with the frequency of 5 Hz (period of 200 ms) */
 		BH1750_Reading = BH1750_ReadIlluminance_lux(&hbh1750_1);
+		Lamp_PID_Control(95);
 	} else if (htim->Instance == TIM4) {
 		/* TIM4 is set with the frequency of 1 Hz (period of 1 s) */
 		UART_TransmitData(WS9527_Reading, BH1750_Reading);

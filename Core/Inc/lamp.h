@@ -8,3 +8,4 @@
 void Lamp_Initialize();
 void Lamp_SetBrightness(uint8_t brightness_percent);
 void Lamp_On_Off();
+void Lamp_PID_Control(double setpoint);
