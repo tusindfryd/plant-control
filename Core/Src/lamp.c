@@ -4,8 +4,9 @@
 #include "bh1750_config.h"
 
 uint16_t BH1750_Reading;
+double Lamp_Setpoint = 200;
 
-double Kp = 2;
+double Kp = 1.2;
 double Ki = 0.0001;
 double Kd = 0.05;
 double previous_error = 0;
@@ -37,7 +38,7 @@ void Lamp_PID_Control(double setpoint) {
 	output = Kp * proportional + Ki * integral + Kd * derivative;
 	output_raw = output;
 	uint16_t current_CRR = __HAL_TIM_GET_COMPARE(&htim3, TIM_CHANNEL_3);
-	uint16_t next_CRR = current_CRR + (output / 100) * current_CRR;
+	uint16_t next_CRR = current_CRR + output;
 	if (next_CRR < 0) {
 		next_CRR = 0;
 	}

@@ -49,12 +49,12 @@ let connectDevice = async () => {
         if (value) {
             try {
                 let reading = JSON.parse(value);
-                console.log(reading);
+                // console.log(reading);
                 // data.moisture.push(parseInt(reading.moisture));
                 // data.times.push(((new Date()).toLocaleString()));
                 let date = (new Date()).toLocaleString();
-                addData(moistureChart, date, parseInt(reading.moisture));
-                addData(brightnessChart, date, parseInt(reading.brightness));
+                addData(moistureChart, date, [parseInt(reading.moisture)]);
+                addData(brightnessChart, date, [parseInt(reading.brightness), parseInt(reading.brightness_setpoint)]);
                 // addData(myChart, date, parseInt(reading.brightness));
 
             } catch (error) {
@@ -77,9 +77,9 @@ let saveChartData = async () => {
 
 let addData = (chart, label, data) => {
     chart.data.labels.push(label);
-    chart.data.datasets.forEach((dataset) => {
-        dataset.data.push(data);
-    });
+    chart.data.datasets.map((dataset, i) => {
+        dataset.data.push(data[i])
+    })
     chart.update();
 }
 
@@ -96,11 +96,18 @@ const moistureChartData = {
 const brightnessChartData = {
     labels: data.times,
     datasets: [{
-        label: 'Brightness',
-        backgroundColor: 'rgb(204, 181, 24)',
-        borderColor: 'rgb(204, 181, 24)',
-        data: data.brightness,
-    }]
+            label: 'Brightness',
+            backgroundColor: 'rgb(204, 181, 24)',
+            borderColor: 'rgb(204, 181, 24)',
+            data: data.brightness,
+        },
+        {
+            label: 'Setpoint',
+            backgroundColor: 'rgb(214, 81, 24)',
+            borderColor: 'rgb(214, 81, 24)',
+            data: data.brightness_setpoint,
+        }
+    ]
 }
 
 const moistureChartConfig = {

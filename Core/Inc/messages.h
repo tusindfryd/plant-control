@@ -6,4 +6,4 @@
 #include <stdio.h>
 #include "usart.h"
 
-void UART_TransmitData(uint16_t reading1, uint16_t reading2);
+void UART_TransmitData(uint16_t reading1, uint16_t reading2, uint16_t setpoint2);
