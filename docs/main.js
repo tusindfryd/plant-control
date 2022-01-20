@@ -49,13 +49,9 @@ let connectDevice = async () => {
         if (value) {
             try {
                 let reading = JSON.parse(value);
-                // console.log(reading);
-                // data.moisture.push(parseInt(reading.moisture));
-                // data.times.push(((new Date()).toLocaleString()));
-                let date = (new Date()).toLocaleString();
+                let date = Date.now();
                 addData(moistureChart, date, [parseInt(reading.moisture)]);
                 addData(brightnessChart, date, [parseInt(reading.brightness), parseInt(reading.brightness_setpoint)]);
-                // addData(myChart, date, parseInt(reading.brightness));
 
             } catch (error) {
                 console.log(error);
@@ -69,6 +65,7 @@ let connectDevice = async () => {
     }
 }
 
+
 let saveChartData = async () => {
     console.log(moistureChart.data, brightnessChart.data)
     // todo
@@ -76,11 +73,13 @@ let saveChartData = async () => {
 }
 
 let addData = (chart, label, data) => {
-    chart.data.labels.push(label);
     chart.data.datasets.map((dataset, i) => {
-        dataset.data.push(data[i])
-    })
-    chart.update();
+        dataset.data.push({
+            x: label,
+            y: data[i]
+        })
+    });
+    chart.update('quiet');
 }
 
 const moistureChartData = {
@@ -125,12 +124,11 @@ const moistureChartConfig = {
         },
         scales: {
             x: {
-                ticks: {
-                    display: false
+                type: 'realtime',
+                realtime: {
+                    duration: 30000,
+                    refresh: 1000,
                 },
-                time: {
-                    unit: 'second'
-                }
             },
             y: {
                 min: 0,
@@ -170,12 +168,11 @@ const brightnessChartConfig = {
         },
         scales: {
             x: {
-                ticks: {
-                    display: false
+                type: 'realtime',
+                realtime: {
+                    duration: 30000,
+                    refresh: 1000,
                 },
-                time: {
-                    unit: 'second'
-                }
             },
             y: {
                 ticks: {
@@ -203,3 +200,20 @@ const brightnessChart = new Chart(
     document.getElementById('brightnessChart'),
     brightnessChartConfig
 );
+
+/* * * * * * * * */
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function test() {
+    while (true) {
+        let date = Date.now();
+        addData(moistureChart, date, [Math.random() * 100]);
+        addData(brightnessChart, date, [Math.random() * 100, 100]);
+        await sleep(200);
+    }
+}
+
+// test();
