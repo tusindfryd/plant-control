@@ -197,15 +197,18 @@ void DisplayMeasurements() {
 		ssd1306_WriteString(moisture_data, Font_7x10, White);
 	}
 	ssd1306_SetCursor(0, 31);
-	char light_data[21];
+	char light_data[22];
 	if (WS9527_Reading < 10) {
 		sprintf(light_data, "Brightness: %01d lx  ", BH1750_Reading);
 		ssd1306_WriteString(light_data, Font_7x10, White);
 	} else if (WS9527_Reading < 100) {
 		sprintf(light_data, "Brightness: %02d lx ", BH1750_Reading);
 		ssd1306_WriteString(light_data, Font_7x10, White);
-	} else {
+	} else if (WS9527_Reading < 1000) {
 		sprintf(light_data, "Brightness: %03d lx", BH1750_Reading);
+		ssd1306_WriteString(light_data, Font_7x10, White);
+	} else {
+		sprintf(light_data, "Brightness: %04dlx", BH1750_Reading);
 		ssd1306_WriteString(light_data, Font_7x10, White);
 	}
 	ssd1306_UpdateScreen();

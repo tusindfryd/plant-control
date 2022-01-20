@@ -72,6 +72,17 @@ let saveChartData = async () => {
 
 }
 
+let setSetpoint = async () => {
+    const port = await navigator.serial.requestPort();
+    let newSetpoint = (document.getElementById('setpointField').value).padStart(4, '0');
+    const textEncoder = new TextEncoderStream();
+    const writableStreamClosed = textEncoder.readable.pipeTo(port.writable);
+    const writer = textEncoder.writable.getWriter();
+    await writer.write(newSetpoint);
+    writer.releaseLock();
+    console.log(newSetpoint);
+}
+
 let addData = (chart, label, data) => {
     chart.data.datasets.map((dataset, i) => {
         dataset.data.push({

@@ -12,7 +12,8 @@
 </head>
 
 <body>
-    <nav><button onclick="connectDevice()">🌱</button> <button onclick="saveChartData()">💾</button></nav>
+    <nav><button onclick="connectDevice()">🌱</button> <input id="setpointField" type="number"></input> <button onclick="setSetpoint()">✉️</button> <button onclick="saveChartData()">💾</button>
+    </nav>
     <div>
         <canvas width="1400" height="400" id="moistureChart"></canvas>
         <canvas width="1400" height="400" id="brightnessChart"></canvas>

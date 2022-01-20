@@ -1,28 +1,47 @@
 body {
-    flex-direction : column;
-    margin         : 0;
-    height         : 100vh;
-    display        : flex;
-    justify-content: center;
-    align-items    : center;
+  flex-direction : column;
+  margin         : 0;
+  height         : 100vh;
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
 }
 
 button {
-    margin: 20px;
+  margin: 20px;
 }
 
 .chartWrapper {
-    position: relative;
-   }
-   
-   .chartWrapper > canvas {
-     position: absolute;
-     left: 0;
-     top: 0;
-     pointer-events: none;
-   }
-   
-   .chartAreaWrapper {
-     width: 600px;
-     overflow-x: scroll;
-   }
+  position: relative;
+}
+
+.chartWrapper>canvas {
+  position      : absolute;
+  left          : 0;
+  top           : 0;
+  pointer-events: none;
+}
+
+.chartAreaWrapper {
+  width     : 600px;
+  overflow-x: scroll;
+}
+
+#setpointField {
+  width        : 40px;
+  border-bottom: 2px solid #a8cc10 !important;
+  height       : 1em;
+  margin       : 0;
+  box-shadow   : none;
+  padding      : 0;
+  overflow     : hidden;
+  inset        : 0;
+  border       : 0;
+  outline      : none;
+  font-size    : inherit;
+}
+
+nav {
+  display    : flex;
+  align-items: center;
+}

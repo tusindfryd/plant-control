@@ -4,17 +4,17 @@
 #include "bh1750_config.h"
 
 uint16_t BH1750_Reading;
-double Lamp_Setpoint = 200;
+double Lamp_Setpoint = 1000;
 
 double Kp = 1.2;
 double Ki = 0.0001;
 double Kd = 0.05;
+
 double previous_error = 0;
 double integral = 0;
 double derivative = 0;
 double dt = 0.2;
 double output = 0;
-double output_raw = 0;
 void Lamp_Initialize() {
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
 }
@@ -36,7 +36,6 @@ void Lamp_PID_Control(double setpoint) {
 	integral = integral - previous_error;
 	derivative = (error - previous_error) / dt;
 	output = Kp * proportional + Ki * integral + Kd * derivative;
-	output_raw = output;
 	uint16_t current_CRR = __HAL_TIM_GET_COMPARE(&htim3, TIM_CHANNEL_3);
 	uint16_t next_CRR = current_CRR + output;
 	if (next_CRR < 0) {
