@@ -12,7 +12,13 @@
 </head>
 
 <body>
-    <nav><button onclick="connectDevice()">🌱</button> <input id="setpointField" type="number"></input> <button onclick="setSetpoint()">✉️</button> <button onclick="saveChartData()">💾</button>
+    <nav>
+        <button onclick="connectDevice()" title="Connect to the device through serial port">🌱</button>
+        <form onsubmit="setSetpoint(); return false;" title="Set brightness setpoint (in lx)">
+            <input name="setpointField" id="setpointField" required pattern="\d{1,4}"></input>
+            <button>💡</button>
+        </form>
+        <button onclick="saveChartData()" title="Save chart data locally as JSON">💾</button>
     </nav>
     <div>
         <canvas width="1400" height="400" id="moistureChart"></canvas>
@@ -27,6 +33,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
 <script src="https://cdn.jsdelivr.net/npm/luxon@1.27.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon"></script>
+<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/1.2.0/chartjs-plugin-zoom.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2.0.0"></script>
 <script src="main.js"></script>
 

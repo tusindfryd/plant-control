@@ -67,10 +67,38 @@ let connectDevice = async () => {
 
 
 let saveChartData = async () => {
-    console.log(moistureChart.data, brightnessChart.data)
-    // todo
-
+    let jsonData = {
+        measurements: []
+    };
+    let charts = [moistureChart, brightnessChart];
+    charts.forEach(chart => {
+        chart.data.datasets.forEach(dataset => {
+            jsonData.measurements.push({
+                title: dataset.label,
+                data: dataset.data
+            })
+        })
+    })
+    let jsonString = JSON.stringify(jsonData, null, '\t');
+    let link = document.createElement('a');
+    link.download = 'measurements.json';
+    let blob = new Blob([jsonString], {
+        type: 'text/plain'
+    });
+    link.href = window.URL.createObjectURL(blob);
+    link.click();
 }
+
+const setSetpointForm = document.querySelector('input');
+
+setSetpointForm.addEventListener('input', () => {
+    setSetpointForm.setCustomValidity('');
+    setSetpointForm.checkValidity();
+});
+
+setSetpointForm.addEventListener('invalid', () => {
+    setSetpointForm.setCustomValidity('Value must be in range [0 - 9999]')
+});
 
 let setSetpoint = async () => {
     const port = await navigator.serial.requestPort();
@@ -80,7 +108,6 @@ let setSetpoint = async () => {
     const writer = textEncoder.writable.getWriter();
     await writer.write(newSetpoint);
     writer.releaseLock();
-    console.log(newSetpoint);
 }
 
 let addData = (chart, label, data) => {
@@ -111,15 +138,15 @@ const brightnessChartData = {
     labels: data.times,
     datasets: [{
             label: 'Brightness',
-            backgroundColor: 'rgb(204, 181, 24)',
-            borderColor: 'rgb(204, 181, 24)',
+            backgroundColor: 'rgb(255, 214, 121)',
+            borderColor: 'rgb(255, 214, 121)',
             data: data.brightness,
             cubicInterpolationMode: 'monotone',
         },
         {
-            label: 'Setpoint',
-            backgroundColor: 'rgb(214, 81, 24)',
-            borderColor: 'rgb(214, 81, 24)',
+            label: 'Brightness setpoint',
+            backgroundColor: 'rgb(175, 239, 255)',
+            borderColor: 'rgb(175, 239, 255)',
             data: data.brightness_setpoint,
         }
     ]
@@ -129,6 +156,11 @@ const moistureChartConfig = {
     type: 'line',
     data: moistureChartData,
     options: {
+        layout: {
+            padding: {
+                left: 40
+            }
+        },
         interaction: {
             intersect: false
         },
@@ -162,6 +194,29 @@ const moistureChartConfig = {
         plugins: {
             legend: {
                 position: 'left'
+            },
+            zoom: {
+                pan: {
+                    enabled: true,
+                    mode: 'x'
+                },
+                zoom: {
+                    pinch: {
+                        enabled: true
+                    },
+                    wheel: {
+                        enabled: true
+                    },
+                    mode: 'x'
+                },
+                limits: {
+                    x: {
+                        minDelay: 0,
+                        maxDelay: 4000,
+                        minDuration: 1000,
+                        maxDuration: 20000
+                    }
+                }
             }
         }
     }
@@ -177,11 +232,6 @@ const brightnessChartConfig = {
         elements: {
             point: {
                 radius: 4
-            }
-        },
-        layout: {
-            padding: {
-                left: 19
             }
         },
         responsive: false,
@@ -207,6 +257,29 @@ const brightnessChartConfig = {
         plugins: {
             legend: {
                 position: 'left'
+            },
+            zoom: {
+                pan: {
+                    enabled: true,
+                    mode: 'x'
+                },
+                zoom: {
+                    pinch: {
+                        enabled: true
+                    },
+                    wheel: {
+                        enabled: true
+                    },
+                    mode: 'x'
+                },
+                limits: {
+                    x: {
+                        minDelay: 0,
+                        maxDelay: 4000,
+                        minDuration: 1000,
+                        maxDuration: 20000
+                    }
+                }
             }
         }
     }
