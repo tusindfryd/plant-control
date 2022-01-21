@@ -93,6 +93,9 @@ let addData = (chart, label, data) => {
     chart.update('quiet');
 }
 
+Chart.defaults.font.family = "Segoe UI";
+
+
 const moistureChartData = {
     labels: data.times,
     datasets: [{
@@ -100,6 +103,7 @@ const moistureChartData = {
         backgroundColor: 'rgb(150, 193, 23)',
         borderColor: 'rgb(150, 193, 23)',
         data: data.moisture,
+        cubicInterpolationMode: 'monotone',
     }]
 }
 
@@ -110,6 +114,7 @@ const brightnessChartData = {
             backgroundColor: 'rgb(204, 181, 24)',
             borderColor: 'rgb(204, 181, 24)',
             data: data.brightness,
+            cubicInterpolationMode: 'monotone',
         },
         {
             label: 'Setpoint',
@@ -124,9 +129,12 @@ const moistureChartConfig = {
     type: 'line',
     data: moistureChartData,
     options: {
+        interaction: {
+            intersect: false
+        },
         elements: {
             point: {
-                radius: 2
+                radius: 4
             }
         },
         responsive: false,
@@ -163,9 +171,12 @@ const brightnessChartConfig = {
     type: 'line',
     data: brightnessChartData,
     options: {
+        interaction: {
+            intersect: false
+        },
         elements: {
             point: {
-                radius: 2
+                radius: 4
             }
         },
         layout: {
@@ -223,7 +234,7 @@ async function test() {
         let date = Date.now();
         addData(moistureChart, date, [Math.random() * 100]);
         addData(brightnessChart, date, [Math.random() * 100, 100]);
-        await sleep(200);
+        await sleep(1000);
     }
 }
 
