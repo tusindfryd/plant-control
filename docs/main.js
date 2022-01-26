@@ -177,7 +177,7 @@ const moistureChartConfig = {
             x: {
                 type: 'realtime',
                 realtime: {
-                    duration: 30000,
+                    duration: 600000,
                     refresh: 1000,
                 },
             },
@@ -242,7 +242,7 @@ const brightnessChartConfig = {
             x: {
                 type: 'realtime',
                 realtime: {
-                    duration: 30000,
+                    duration: 600000,
                     refresh: 1000,
                 },
             },
