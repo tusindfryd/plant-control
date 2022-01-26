@@ -72,7 +72,7 @@ extern bool menu_open;
 extern const unsigned char bg[];
 extern uint16_t BH1750_Reading;
 extern double Lamp_Setpoint;
-char brightness_str[4];
+char brightness_str[5];
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	WS9527_GetReadings(hadc);
@@ -143,13 +143,13 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM4_Init();
   MX_TIM1_Init();
+  MX_USART3_UART_Init();
+  MX_I2C1_Init();
   MX_I2C2_Init();
   MX_GPIO_Init();
-  MX_USART3_UART_Init();
   MX_ADC1_Init();
-  MX_USB_OTG_FS_PCD_Init();
-  MX_I2C1_Init();
   MX_TIM2_Init();
+  MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
 	Splash();
 	HAL_TIM_Base_Start_IT(&htim2);

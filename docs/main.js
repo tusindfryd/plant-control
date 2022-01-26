@@ -103,10 +103,10 @@ setSetpointForm.addEventListener('invalid', () => {
 let setSetpoint = async () => {
     const port = await navigator.serial.requestPort();
     let newSetpoint = (document.getElementById('setpointField').value).padStart(4, '0');
-    const textEncoder = new TextEncoderStream();
-    const writableStreamClosed = textEncoder.readable.pipeTo(port.writable);
-    const writer = textEncoder.writable.getWriter();
-    await writer.write(newSetpoint);
+    const writer = port.writable.getWriter();
+    let enc = new TextEncoder();
+    const data = enc.encode(newSetpoint);
+    await writer.write(data);
     writer.releaseLock();
 }
 
@@ -214,7 +214,7 @@ const moistureChartConfig = {
                         minDelay: 0,
                         maxDelay: 4000,
                         minDuration: 1000,
-                        maxDuration: 20000
+                        maxDuration: 60000
                     }
                 }
             }
@@ -277,7 +277,7 @@ const brightnessChartConfig = {
                         minDelay: 0,
                         maxDelay: 4000,
                         minDuration: 1000,
-                        maxDuration: 20000
+                        maxDuration: 60000
                     }
                 }
             }
