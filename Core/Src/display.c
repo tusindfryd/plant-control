@@ -173,18 +173,19 @@ const unsigned char garfield1_128x64[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 
 extern uint16_t WS9527_Reading;
 extern uint16_t BH1750_Reading;
+extern double Lamp_Setpoint;
 bool menu_open = false;
 extern volatile uint16_t positions;
 
 void Splash() {
 	ssd1306_Init();
 	ssd1306_DrawBitmap(0, 0, bg, 128, 64, White);
-	BackgroundRectangle();
 	ssd1306_UpdateScreen();
 }
 
 void DisplayMeasurements() {
-	ssd1306_SetCursor(0, 20);
+	BackgroundRectangle();
+	ssd1306_SetCursor(0, 15);
 	char moisture_data[21];
 	if (WS9527_Reading < 10) {
 		sprintf(moisture_data, "Soil moisture: %01d%%  ", WS9527_Reading);
@@ -196,20 +197,35 @@ void DisplayMeasurements() {
 		sprintf(moisture_data, "Soil moisture: %03d%%", WS9527_Reading);
 		ssd1306_WriteString(moisture_data, Font_7x10, White);
 	}
-	ssd1306_SetCursor(0, 31);
+	ssd1306_SetCursor(0, 26);
 	char light_data[22];
-	if (WS9527_Reading < 10) {
+	if (BH1750_Reading < 10) {
 		sprintf(light_data, "Brightness: %01d lx  ", BH1750_Reading);
 		ssd1306_WriteString(light_data, Font_7x10, White);
-	} else if (WS9527_Reading < 100) {
+	} else if (BH1750_Reading < 100) {
 		sprintf(light_data, "Brightness: %02d lx ", BH1750_Reading);
 		ssd1306_WriteString(light_data, Font_7x10, White);
-	} else if (WS9527_Reading < 1000) {
+	} else if (BH1750_Reading < 1000) {
 		sprintf(light_data, "Brightness: %03d lx", BH1750_Reading);
 		ssd1306_WriteString(light_data, Font_7x10, White);
 	} else {
-		sprintf(light_data, "Brightness: %04dlx", BH1750_Reading);
+		sprintf(light_data, "Brightness: %04d lx", BH1750_Reading);
 		ssd1306_WriteString(light_data, Font_7x10, White);
+	}
+	ssd1306_SetCursor(0, 37);
+	char setpoint_str[22];
+	if (Lamp_Setpoint < 10) {
+		sprintf(setpoint_str, "Setpoint: %01d lx  ", (int) Lamp_Setpoint);
+		ssd1306_WriteString(setpoint_str, Font_7x10, White);
+	} else if (Lamp_Setpoint < 100) {
+		sprintf(setpoint_str, "Setpoint: %02d lx ", (int) Lamp_Setpoint);
+		ssd1306_WriteString(setpoint_str, Font_7x10, White);
+	} else if (Lamp_Setpoint < 1000) {
+		sprintf(setpoint_str, "Setpoint: %03d lx", (int) Lamp_Setpoint);
+		ssd1306_WriteString(setpoint_str, Font_7x10, White);
+	} else {
+		sprintf(setpoint_str, "Setpoint: %04d lx", (int) Lamp_Setpoint);
+		ssd1306_WriteString(setpoint_str, Font_7x10, White);
 	}
 	ssd1306_UpdateScreen();
 }
@@ -218,17 +234,11 @@ void OpenMenu() {
 	menu_open = true;
 	ssd1306_Fill(Black);
 	ssd1306_SetCursor(0, 0);
-	ssd1306_WriteString("Set soil moisture value", Font_7x10,
-			(positions % 4 == 0) ? Black : White);
-	ssd1306_SetCursor(0, 11);
-	ssd1306_WriteString("Run the pump", Font_7x10,
-			(positions % 4 == 1) ? Black : White);
-	ssd1306_SetCursor(0, 22);
 	ssd1306_WriteString("Turn lamp on/off", Font_7x10,
-			(positions % 4 == 2) ? Black : White);
+			(positions % 2 == 0) ? Black : White);
 	ssd1306_SetCursor(0, 64 - 10);
 	ssd1306_WriteString("< Back", Font_7x10,
-			(positions % 4 == 3) ? Black : White);
+			(positions % 2 == 1) ? Black : White);
 	ssd1306_UpdateScreen();
 }
 
@@ -241,7 +251,7 @@ void CloseMenu() {
 }
 
 void BackgroundRectangle() {
-	for (uint8_t i = 0; i < 13; i++) {
-		ssd1306_DrawRectangle(0 + i, 15 + i, SSD1306_WIDTH - i, 42 - i, Black);
+	for (uint8_t i = 10; i < 51; i++) {
+		ssd1306_Line(0, i, SSD1306_WIDTH, i, Black);
 	}
 }

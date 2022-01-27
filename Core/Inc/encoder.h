@@ -6,7 +6,6 @@
  ******************************************************************************
  */
 
-
 #ifndef INC_ENCODER_H_
 #define INC_ENCODER_H_
 
@@ -17,6 +16,7 @@
 #include "tim.h"
 #include "gpio.h"
 #include "display.h"
+#include "lamp.h"
 
 /* Public function prototypes ------------------------------------------------*/
 

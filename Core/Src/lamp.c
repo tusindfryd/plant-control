@@ -4,7 +4,7 @@
 #include "bh1750_config.h"
 
 uint16_t BH1750_Reading;
-double Lamp_Setpoint = 1000;
+double Lamp_Setpoint = 300;
 
 double Kp = 1.2;
 double Ki = 0.0001;
@@ -15,6 +15,9 @@ double integral = 0;
 double derivative = 0;
 double dt = 0.2;
 double output = 0;
+
+bool Lamp_PID_Control_On = false;
+
 void Lamp_Initialize() {
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
 }
@@ -26,6 +29,7 @@ void Lamp_SetBrightness(uint8_t brightness_percent) {
 }
 
 void Lamp_On_Off() {
+	Lamp_PID_Control_On = false;
 	__HAL_TIM_GET_COMPARE(&htim3, TIM_CHANNEL_3) == 0 ?
 			Lamp_SetBrightness(100) : Lamp_SetBrightness(0);
 }

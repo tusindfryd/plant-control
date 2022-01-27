@@ -13,6 +13,7 @@
 
 #include "tim.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 /* Public function prototypes ------------------------------------------------*/
 

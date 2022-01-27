@@ -8,15 +8,23 @@ uint8_t debounce = 20;
 uint8_t button = 0;
 
 extern bool menu_open;
+extern double Lamp_Setpoint;
+extern bool Lamp_PID_Control_On;
 
 void QE_Initialize() {
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
 }
 
 void QE_CheckPosition() {
-	pulse_count = TIM1->CNT;
-	positions = pulse_count / 4;
-	if (menu_open) {
+	if (!menu_open && pulse_count != TIM1->CNT) {
+		int8_t difference = TIM1->CNT - pulse_count;
+		pulse_count = TIM1->CNT;
+		positions = pulse_count / 4;
+		Lamp_Setpoint = Lamp_Setpoint + difference / 4;
+		Lamp_PID_Control_On = true;
+	} else if (menu_open) {
+		pulse_count = TIM1->CNT;
+		positions = pulse_count / 4;
 		OpenMenu();
 	}
 }
@@ -26,13 +34,9 @@ void SwitchHandler() {
 		if (!menu_open) {
 			OpenMenu();
 		} else if (menu_open) {
-			if (positions % 4 == 0) {
-//				SetSoilMoistureScreen();
-			} else if (positions % 4 == 1) {
-//				RunPump();
-			} else if (positions % 4 == 2) {
+			if (positions % 2 == 0) {
 				Lamp_On_Off();
-			} else if (positions % 4 == 3) {
+			} else if (positions % 2 == 1) {
 				CloseMenu();
 			}
 		}
